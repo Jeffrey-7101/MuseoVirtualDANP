@@ -10,21 +10,17 @@ import SwiftUI
 struct CreateAccountView: View {
     
     @State private var username = ""
-    @State private var password = ""
-    @State private var name = ""
+    @State private var password1 = ""
+    @State private var password2 = ""
     @State private var email = ""
-    @Binding var users: [User]
-    @Environment(\.presentationMode) var presentationMode // Para volver a la pantalla anterior
+    @State private var errorMessage: String?
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             Text("Create Account")
                 .font(.largeTitle)
                 .padding(.bottom, 40)
-            
-            TextField("Name", text: $name)
-                .padding()
-                .textFieldStyle(.roundedBorder)
             
             TextField("Email", text: $email)
                 .padding()
@@ -37,9 +33,19 @@ struct CreateAccountView: View {
                 .textFieldStyle(.roundedBorder)
                 .autocapitalization(.none)
             
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $password1)
                 .padding()
                 .textFieldStyle(.roundedBorder)
+            
+            SecureField("Confirm Password", text: $password2)
+                .padding()
+                .textFieldStyle(.roundedBorder)
+            
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .padding(.top, 10)
+            }
             
             Button("Create Account", action: createAccount)
                 .buttonStyle(.borderedProminent)
@@ -49,11 +55,38 @@ struct CreateAccountView: View {
     }
     
     func createAccount() {
-        let newUser = User(username: username, password: password, name: name, email: email)
-        users.append(newUser)
-        print("Cuenta creada para \(username)")
+        guard password1 == password2 else {
+            errorMessage = "Passwords do not match"
+            return
+        }
         
-        // Volver automáticamente al login después de crear la cuenta
-        presentationMode.wrappedValue.dismiss()
+        let url = URL(string: "https://museo.epis-dev.site/api/auth/register/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Any] = ["email": email, "username": username, "password1": password1, "password2": password2]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                }
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else { return }
+            
+            if httpResponse.statusCode == 204 {
+                DispatchQueue.main.async {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.errorMessage = "Registration failed. Please check your details."
+                }
+            }
+        }.resume()
     }
 }
