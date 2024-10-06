@@ -74,27 +74,26 @@ struct ContentView: View {
 //    }
     
     // Crear datos de ejemplo para el museo
-        
     // Crear datos de ejemplo para el museo
     var rooms: [MuseumRoom] {
         [
-            MuseumRoom(name: "Sala 1", frame: CGRect(x: 50, y: 100, width: 150, height: 150), expositions: [
-                Exposition(name: "Pintura A", shape: .circle, relativeFrame: CGRect(x: 30, y: 30, width: 40, height: 40)), // Coordenadas relativas a la sala
-                Exposition(name: "Pintura B", shape: .rectangle, relativeFrame: CGRect(x: -20, y: 0, width: 10, height: 20))
-            ]),
-            MuseumRoom(name: "Sala 2", frame: CGRect(x: 250, y: 100, width: 150, height: 150), expositions: [
-                Exposition(name: "Pintura C", shape: .rectangle, relativeFrame: CGRect(x: 20, y: 50, width: 50, height: 30)),
-                Exposition(name: "Pintura D", shape: .circle, relativeFrame: CGRect(x: 90, y: 90, width: 40, height: 40))
-            ]),
-            MuseumRoom(name: "Sala 3", frame: CGRect(x: 150, y: 300, width: 150, height: 150), expositions: [
-                Exposition(name: "Pintura E", shape: .circle, relativeFrame: CGRect(x: 40, y: 50, width: 50, height: 50)),
-                Exposition(name: "Pintura F", shape: .rectangle, relativeFrame: CGRect(x: 100, y: 100, width: 60, height: 40))
-            ])
+//            MuseumRoom(name: "Sala 1", frame: CGRect(x: 50, y: 100, width: 150, height: 150), expositions: [
+//                Exposition(name: "Pintura A", shape: .circle, relativeFrame: CGRect(x: 30, y: 30, width: 40, height: 40)), // Coordenadas relativas a la sala
+//                Exposition(name: "Pintura B", shape: .rectangle, relativeFrame: CGRect(x: -20, y: 0, width: 10, height: 20))
+//            ]),
+//            MuseumRoom(name: "Sala 2", frame: CGRect(x: 250, y: 100, width: 150, height: 150), expositions: [
+//                Exposition(name: "Pintura C", shape: .rectangle, relativeFrame: CGRect(x: 20, y: 50, width: 50, height: 30)),
+//                Exposition(name: "Pintura D", shape: .circle, relativeFrame: CGRect(x: 90, y: 90, width: 40, height: 40))
+//            ]),
+//            MuseumRoom(name: "Sala 3", frame: CGRect(x: 150, y: 300, width: 150, height: 150), expositions: [
+//                Exposition(name: "Pintura E", shape: .circle, relativeFrame: CGRect(x: 40, y: 50, width: 50, height: 50)),
+//                Exposition(name: "Pintura F", shape: .rectangle, relativeFrame: CGRect(x: 100, y: 100, width: 60, height: 40))
+//            ])
         ]
     }
     
     var body: some View {
-        MuseumMapView(rooms: rooms, targetSize: CGSize(width: 400, height: 600))
+        MuseumMapView(targetSize: CGSize(width: 400, height: 600))
     }
 }
 
