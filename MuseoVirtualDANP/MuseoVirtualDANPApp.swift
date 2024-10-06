@@ -15,8 +15,7 @@ struct LoginApp: App {
         WindowGroup {
             NavigationView {
                 if isLoggedIn {
-                    HomeView(isLoggedIn: $isLoggedIn)
-                        .navigationBarBackButtonHidden(true)
+                    TabNavigatioView(isloggedIn: $isLoggedIn)
                 } else {
                     LoginView(isLoggedIn: $isLoggedIn)
                 }
