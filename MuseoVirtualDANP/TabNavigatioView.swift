@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TabNavigatioView: View {
     @Binding var isloggedIn: Bool
+    
     var body: some View {
             TabView {
                 // Primera pestaña - Listado

@@ -1,22 +1,69 @@
 import SwiftUI
+import CoreData
 
-// Modelo de Sala del Museo
+// Entidad de sala del museo
+//@objc(MuseumRoomEntity)
+//public class MuseumRoomEntity: NSManagedObject {
+//    @NSManaged public var id: UUID?
+//    @NSManaged public var name: String
+//    @NSManaged public var posX: Double
+//    @NSManaged public var posY: Double
+//    @NSManaged public var width: Double
+//    @NSManaged public var height: Double
+//    @NSManaged public var expositions: NSSet?
+//}
+//
+//// Entidad de exposición
+//@objc(ExpositionEntity)
+//public class ExpositionEntity: NSManagedObject {
+//    @NSManaged public var id: UUID?
+//    @NSManaged public var name: String
+//    @NSManaged public var posX: Double
+//    @NSManaged public var posY: Double
+//    @NSManaged public var width: Double
+//    @NSManaged public var height: Double
+//    @NSManaged public var absolutePosition: Bool
+//    @NSManaged public var room: MuseumRoomEntity?
+//}
+// MARK: - Estructura del Modelo
 struct MuseumRoom {
-    let id: Int
+    let id: UUID
     let name: String
-    let description: String
     let frame: CGRect
     var expositions: [Exposition]
 }
 
-// Modelo de Exposición
 struct Exposition {
-    let id: Int
+    let id: UUID
     let name: String
-    let description: String
+    let shape: ShapeType
     let relativeFrame: CGRect
-    let imageURL: URL?
+    
+    enum ShapeType {
+        case rectangle
+    }
 }
+// Modelo para parsear la API
+struct MuseumRoomAPI: Decodable {
+    let id: Int
+    let nombre: String
+    let posX: Double
+    let posY: Double
+    let width: Double
+    let height: Double
+    let exposiciones: [ExpositionAPI]
+}
+
+struct ExpositionAPI: Decodable {
+    let id: Int
+    let titulo: String
+    let posX: Double
+    let posY: Double
+    let width: Double
+    let height: Double
+    let absolute_position: Bool
+}
+
 
 // Vista para una Exposición (siempre rectángulo)
 struct ExpositionView: View {
@@ -40,67 +87,55 @@ struct ExpositionView: View {
 class MuseumData: ObservableObject {
     @Published var rooms: [MuseumRoom] = []
 
-    func fetchRooms() {
-        guard let url = URL(string: "https://museo.epis-dev.site/api/museo/salas/") else { return }
-
+    // Función para obtener los datos de la API y guardarlos en Core Data
+    func fetchMuseumData() {
+        let url = URL(string: "https://museo.epis-dev.site/api/museo/salas/")!
+        print("url")
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching rooms: \(error)")
+            guard let data = data, error == nil else {
+                print("Error en la solicitud: \(error?.localizedDescription ?? "Error desconocido")")
                 return
             }
-
-            guard let data = data else { return }
-
+            
+            // Parsear los datos
             do {
-                // Parseamos los datos de la API
-                if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                    DispatchQueue.main.async {
-                        self.rooms = jsonArray.compactMap { roomJSON in
-                            guard let id = roomJSON["id"] as? Int,
-                                  let name = roomJSON["nombre"] as? String,
-                                  let description = roomJSON["descripcion"] as? String,
-                                  let posX = roomJSON["posX"] as? Double,
-                                  let posY = roomJSON["posY"] as? Double,
-                                  let width = roomJSON["width"] as? Double,
-                                  let height = roomJSON["height"] as? Double else {
-                                return nil // Si falta algún dato esencial, omitimos la sala
-                            }
-
-                            // Mapear las exposiciones
-                            let expositions: [Exposition] = (roomJSON["exposiciones"] as? [[String: Any]])?.compactMap { expoJSON in
-                                guard let expoId = expoJSON["id"] as? Int,
-                                      let title = expoJSON["titulo"] as? String,
-                                      let expoPosX = expoJSON["posX"] as? Double,
-                                      let expoPosY = expoJSON["posY"] as? Double,
-                                      let expoWidth = expoJSON["width"] as? Double,
-                                      let expoHeight = expoJSON["height"] as? Double,
-                                      let imageURLString = expoJSON["imagen"] as? String else {
-                                    return nil // Omitir si los datos de la exposición no están completos
-                                }
-
-                                let imageURL = URL(string: imageURLString)
-
-                                return Exposition(
-                                    id: expoId,
-                                    name: title,
-                                    description: expoJSON["descripcion"] as? String ?? "",
-                                    relativeFrame: CGRect(x: expoPosX, y: expoPosY, width: expoWidth, height: expoHeight),
-                                    imageURL: imageURL
-                                )
-                            } ?? []
-
-                            return MuseumRoom(
-                                id: id,
-                                name: name,
-                                description: description,
-                                frame: CGRect(x: posX, y: posY, width: width, height: height),
-                                expositions: expositions
-                            )
-                        }
+                let decodedRooms = try JSONDecoder().decode([MuseumRoomAPI].self, from: data)
+                
+                // Guardar en Core Data
+                let context = PersistenceController.shared.context
+                
+                for roomData in decodedRooms {
+                    let roomEntity = MuseumRoomEntity(context: context)
+                    roomEntity.id = UUID() // Convertir si necesario
+                    roomEntity.name = roomData.nombre
+                    roomEntity.posX = roomData.posX
+                    roomEntity.posY = roomData.posY
+                    roomEntity.width = roomData.width
+                    roomEntity.height = roomData.height
+                    
+                    print(roomEntity)
+                    
+                    // Exposiciones
+                    for expositionData in roomData.exposiciones {
+                        let expositionEntity = ExpositionEntity(context: context)
+                        expositionEntity.id = UUID() // Convertir si necesario
+                        expositionEntity.name = expositionData.titulo
+                        expositionEntity.posX = expositionData.posX
+                        expositionEntity.posY = expositionData.posY
+                        expositionEntity.width = expositionData.width
+                        expositionEntity.height = expositionData.height
+                        expositionEntity.absolutePosition = expositionData.absolute_position
+                        expositionEntity.room = roomEntity // Relacionar la exposición con la
+                        print(expositionEntity)
+                        print(expositionData)
                     }
                 }
+                
+                // Guardar el contexto
+                try context.save()
+                
             } catch {
-                print("Error parsing JSON: \(error)")
+                print("Error al parsear o guardar los datos: \(error.localizedDescription)")
             }
         }.resume()
     }
@@ -147,61 +182,155 @@ struct RoomView: View {
     }
 }
 
-
-// Vista del Mapa del Museo
 struct MuseumMapView: View {
-    @ObservedObject var museumData = MuseumData()
-    let targetSize: CGSize // Tamaño deseado del museo
+    @FetchRequest(
+        entity: MuseumRoomEntity.entity(),
+        sortDescriptors: []
+    ) var rooms: FetchedResults<MuseumRoomEntity>
     
-    @State private var selectedRoom: Int? // Rastrea la sala seleccionada
-
+    let targetSize: CGSize
+    
     var body: some View {
-        let originalSize = CGSize(width: 11, height: 23) // Tamaño base del museo
-        let scale = min(targetSize.width / originalSize.width, targetSize.height / originalSize.height) // Factor de escala
-
-        // Ordenar las salas: si hay una sala seleccionada, esta se dibuja al final
-        let sortedRooms = museumData.rooms.sorted { room1, room2 in
-            if let selectedRoom = selectedRoom {
-                return room1.id == selectedRoom ? false : true
-            }
-            return true
-        }
-
-        ZStack {
-            ForEach(sortedRooms, id: \.id) { room in
-                let isSelected = selectedRoom == room.id
-                let maxScale = min(targetSize.width / room.frame.width, targetSize.height / room.frame.height) // Escala máxima que puede ocupar la sala
-                
-                // Si está seleccionada, su origen se ajusta al (0, 0) para centrarla
-                let adjustedOrigin = isSelected ? CGPoint(x: 0, y: 0) : room.frame.origin
-                
-                RoomView(	
-                    room: room,
-                    scale: isSelected ? maxScale : scale, // Si está seleccionada, usar la escala máxima
-                    isSelected: isSelected,
-                    maxScale: maxScale,
-                    adjustedOrigin: adjustedOrigin, // Cambia la posición de la sala
-                    onTapRoom: {
-                        withAnimation(.easeInOut) { // Añadimos una animación suave
-                            if selectedRoom == room.id {
-                                selectedRoom = nil // Deseleccionar si ya estaba seleccionada
-                            } else {
-                                selectedRoom = room.id // Seleccionar la sala
-                            }
+            let originalSize = CGSize(width: 11, height: 23)
+            let scale = min(targetSize.width / originalSize.width, targetSize.height / originalSize.height)
+            
+            ZStack {
+//                let _ = print("rooms")
+//                let _ = print(rooms)
+                ForEach(rooms, id: \.id) { room in
+                    let expositions = (room.expositions?.allObjects as? [ExpositionEntity]) ?? []
+                    
+                    let _ = print("expositions lll")
+                    let _ = print(room)
+                    
+                    let museumRoom = MuseumRoom(
+                        id: room.id!,
+                        name: room.name ?? "va",
+                        frame: CGRect(x: room.posX, y: room.posY, width: room.width, height: room.height),
+                        expositions: expositions.map { exposition in
+                            Exposition(
+                                id: exposition.id!,
+                                name: exposition.name ?? "vaa",
+                                shape: .rectangle, // Por defecto todas las exposiciones serán rectángulos
+                                relativeFrame: CGRect(x: exposition.posX, y: exposition.posY, width: exposition.width, height: exposition.height)
+                            )
                         }
-                    },
-                    onTapExposition: { exposition in
-                        print("Exposición seleccionada: \(exposition.name)")
-                    }
-                )
+                    )
+                    
+                    RoomView(
+                        room: museumRoom,
+                        scale: scale,
+                        isSelected: false, // Añadir lógica para la selección si es necesario
+                        maxScale: scale,
+                        adjustedOrigin: CGPoint(x: room.posX, y: room.posY),
+                        onTapRoom: {},
+                        onTapExposition: { _ in }
+                    )
+                }
+            }
+            .frame(width: targetSize.width, height: targetSize.height)
+            .onAppear {
+                fetchMuseumData() // Llama a la API solo una vez al aparecer
             }
         }
-        .frame(width: targetSize.width, height: targetSize.height)
-        .background(Color.white)
-        .onAppear {
-            museumData.fetchRooms() // Obtener los datos cuando la vista aparezca
+}
+
+// MARK: - Función para obtener datos del API
+func fetchMuseumData() {
+    guard let url = URL(string: "https://museo.epis-dev.site/api/museo/salas/") else { return }
+
+    let request = URLRequest(url: url)
+    
+    print("super url")
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Error al obtener datos: \(error)")
+            return
         }
-        .border(Color.black, width: 2)
+        
+        guard let data = data else { return }
+        
+        // Decodificar JSON
+        let decoder = JSONDecoder()
+        do {
+            let roomsData = try decoder.decode([MuseumRoomData].self, from: data)
+            saveRoomsToCoreData(roomsData)
+        } catch {
+            print("Error al decodificar JSON: \(error)")
+        }
+    }.resume()
+}
+
+// MARK: - Función para guardar datos en Core Data
+func saveRoomsToCoreData(_ roomsData: [MuseumRoomData]) {
+    let context = PersistenceController.shared.container.viewContext
+    
+    for roomData in roomsData {
+        let roomEntity = MuseumRoomEntity(context: context)
+        roomEntity.id = roomData.id != nil ? UUID(uuidString: String(roomData.id!)) : UUID()
+        roomEntity.name = roomData.nombre
+        roomEntity.posX = roomData.posX
+        roomEntity.posY = roomData.posY
+        roomEntity.width = roomData.width
+        roomEntity.height = roomData.height
+        
+        // Verifica si tiene UUID, sino asigna uno nuevo
+        if roomEntity.id == nil {
+            roomEntity.id = UUID()
+        }
+        
+        print("saving")
+        print(roomEntity)
+        
+        print("Museo")
+        print(roomEntity)
+//        print(roomsData)
+
+        for expositionData in roomData.exposiciones {
+            let expositionEntity = ExpositionEntity(context: context)
+            expositionEntity.id = expositionData.id != nil ? UUID(uuidString: String(expositionData.id!)) : UUID()
+            expositionEntity.name = expositionData.titulo
+            expositionEntity.posX = expositionData.posX
+            expositionEntity.posY = expositionData.posY
+            expositionEntity.width = expositionData.width
+            expositionEntity.height = expositionData.height
+            if expositionEntity.id == nil {
+                expositionEntity.id = UUID()
+            }
+            
+            // Agregar la relación
+            roomEntity.addToExpositions(expositionEntity)
+            
+//            print("otroooo")
+//            print(expositionEntity)
+        }
+        
+    }
+
+    do {
+        try context.save()
+    } catch {
+        print("Error al guardar en Core Data: \(error)")
     }
 }
 
+// MARK: - Modelos de Decodificación
+struct MuseumRoomData: Codable {
+    let id: Int?
+    let nombre: String
+    let posX: Double
+    let posY: Double
+    let width: Double
+    let height: Double
+    let exposiciones: [ExpositionData]
+}
+
+struct ExpositionData: Codable {
+    let id: Int?
+    let titulo: String
+    let posX: Double
+    let posY: Double
+    let width: Double
+    let height: Double
+}

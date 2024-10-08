@@ -13,13 +13,14 @@ struct LoginApp: App {
     
     var body: some Scene {
         WindowGroup {
+            let persistenceController = PersistenceController.shared
             NavigationView {
                 if isLoggedIn {
                     TabNavigatioView(isloggedIn: $isLoggedIn)
                 } else {
                     LoginView(isLoggedIn: $isLoggedIn)
                 }
-            }
+            }.environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
