@@ -13,7 +13,6 @@
 		620B49E42CB1D1EB00627F64 /* CreatedAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */; };
 		6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */; };
 		8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */; };
-		8CFBBFC92CAF2E84002E9817 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFC82CAF2E84002E9817 /* ContentView.swift */; };
 		8CFBBFCB2CAF2E87002E9817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */; };
 		8CFBBFCE2CAF2E87002E9817 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCD2CAF2E87002E9817 /* Preview Assets.xcassets */; };
 		8CFBBFD02CAF2E87002E9817 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */; };
@@ -28,7 +27,6 @@
 		6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigatioView.swift; sourceTree = "<group>"; };
 		8CFBBFC32CAF2E84002E9817 /* MuseoVirtualDANP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuseoVirtualDANP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseoVirtualDANPApp.swift; sourceTree = "<group>"; };
-		8CFBBFC82CAF2E84002E9817 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CFBBFCD2CAF2E87002E9817 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 			children = (
 				620B49D72CB0FDD200627F64 /* Scenes */,
 				8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */,
-				8CFBBFC82CAF2E84002E9817 /* ContentView.swift */,
 				8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */,
 				8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */,
 				8CFBBFD12CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld */,
@@ -178,7 +175,6 @@
 				8CFBBFD32CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld in Sources */,
 				620B49E02CB1CF2D00627F64 /* LoginView.swift in Sources */,
 				8CFBBFD02CAF2E87002E9817 /* Persistence.swift in Sources */,
-				8CFBBFC92CAF2E84002E9817 /* ContentView.swift in Sources */,
 				620B49DB2CB100D600627F64 /* MuseumMapView.swift in Sources */,
 				620B49E22CB1D1AD00627F64 /* HomeView.swift in Sources */,
 				8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */,

@@ -1,10 +1,3 @@
-//
-//  CreatedAccountView.swift
-//  MuseoVirtualDANP
-//
-//  Created by MacEpis on 5/10/24.
-//
-
 import SwiftUI
 
 struct CreateAccountView: View {

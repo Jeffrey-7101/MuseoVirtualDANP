@@ -1,30 +1,6 @@
 import SwiftUI
 import CoreData
 
-// Entidad de sala del museo
-//@objc(MuseumRoomEntity)
-//public class MuseumRoomEntity: NSManagedObject {
-//    @NSManaged public var id: UUID?
-//    @NSManaged public var name: String
-//    @NSManaged public var posX: Double
-//    @NSManaged public var posY: Double
-//    @NSManaged public var width: Double
-//    @NSManaged public var height: Double
-//    @NSManaged public var expositions: NSSet?
-//}
-//
-//// Entidad de exposición
-//@objc(ExpositionEntity)
-//public class ExpositionEntity: NSManagedObject {
-//    @NSManaged public var id: UUID?
-//    @NSManaged public var name: String
-//    @NSManaged public var posX: Double
-//    @NSManaged public var posY: Double
-//    @NSManaged public var width: Double
-//    @NSManaged public var height: Double
-//    @NSManaged public var absolutePosition: Bool
-//    @NSManaged public var room: MuseumRoomEntity?
-//}
 // MARK: - Estructura del Modelo
 struct MuseumRoom {
     let id: UUID
@@ -44,7 +20,6 @@ struct Exposition {
     }
 }
 
-// Vista para una Exposición (siempre rectángulo)
 struct ExpositionView: View {
     let exposition: Exposition
     let roomOrigin: CGPoint
@@ -62,7 +37,6 @@ struct ExpositionView: View {
     }
 }
 
-// Vista para una Sala del Museo
 struct RoomView: View {
     let room: MuseumRoom
     let scale: CGFloat
@@ -241,9 +215,7 @@ func saveRoomsToCoreData(_ roomsData: [MuseumRoomData]) {
             
             // Agregar la relación
             roomEntity.addToExpositions(expositionEntity)
-            
-//            print("otroooo")
-//            print(expositionEntity)
+           
         }
         
     }
@@ -274,3 +246,4 @@ struct ExpositionData: Codable {
     let width: Double
     let height: Double
 }
+
