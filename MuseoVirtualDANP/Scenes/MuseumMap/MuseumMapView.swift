@@ -176,60 +176,53 @@ func fetchMuseumData() {
     }.resume()
 }
 
-// MARK: - Función para guardar datos en Core Data
 func saveRoomsToCoreData(_ roomsData: [MuseumRoomData]) {
     let context = PersistenceController.shared.container.viewContext
     
     for roomData in roomsData {
-        let roomEntity = MuseumRoomEntity(context: context)
-        roomEntity.id = roomData.id != nil ? UUID(uuidString: String(roomData.id!)) : UUID()
-        roomEntity.name = roomData.nombre
-        roomEntity.posX = roomData.posX
-        roomEntity.posY = roomData.posY
-        roomEntity.width = roomData.width
-        roomEntity.height = roomData.height
-        
-        // Verifica si tiene UUID, sino asigna uno nuevo
-        if roomEntity.id == nil {
-            roomEntity.id = UUID()
+        if roomData.id == nil {
+            continue
         }
-        
-        print("saving")
-        print(roomEntity)
-        
-        print("Museo")
-        print(roomEntity)
-//        print(roomsData)
 
-        for expositionData in roomData.exposiciones {
-            let expositionEntity = ExpositionEntity(context: context)
-            expositionEntity.id = expositionData.id != nil ? UUID(uuidString: String(expositionData.id!)) : UUID()
-            expositionEntity.name = expositionData.titulo
-            expositionEntity.posX = expositionData.posX
-            expositionEntity.posY = expositionData.posY
-            expositionEntity.width = expositionData.width
-            expositionEntity.height = expositionData.height
-            if expositionEntity.id == nil {
-                expositionEntity.id = UUID()
+        // Buscar si ya existe un objeto con el mismo integer_id
+        let fetchRequest: NSFetchRequest<MuseumRoomEntity> = MuseumRoomEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "integer_id == %d", roomData.id!)
+        
+        do {
+            let fetchedRooms = try context.fetch(fetchRequest)
+            
+            // Si ya existe una sala con el mismo integer_id, la actualizamos
+            if let existingRoom = fetchedRooms.first {
+                existingRoom.name = roomData.nombre
+                existingRoom.posX = roomData.posX
+                existingRoom.posY = roomData.posY
+                existingRoom.width = roomData.width
+                existingRoom.height = roomData.height
+                print("Updating existing room with integer_id \(roomData.id!)")
+            } else {
+                // Si no existe, creamos una nueva entidad
+                let newRoomEntity = MuseumRoomEntity(context: context)
+                newRoomEntity.id = UUID(uuidString: String(roomData.id!)) ?? UUID()
+                newRoomEntity.integer_id = roomData.id!
+                newRoomEntity.name = roomData.nombre
+                newRoomEntity.posX = roomData.posX
+                newRoomEntity.posY = roomData.posY
+                newRoomEntity.width = roomData.width
+                newRoomEntity.height = roomData.height
+                print("Creating new room with integer_id \(roomData.id!)")
             }
             
-            // Agregar la relación
-            roomEntity.addToExpositions(expositionEntity)
-           
+            // Guarda los cambios en el contexto
+            try context.save()
+        } catch {
+            print("Error al intentar guardar o actualizar la entidad: \(error)")
         }
-        
-    }
-
-    do {
-        try context.save()
-    } catch {
-        print("Error al guardar en Core Data: \(error)")
     }
 }
 
 // MARK: - Modelos de Decodificación
 struct MuseumRoomData: Codable {
-    let id: Int?
+    let id: Int64?
     let nombre: String
     let posX: Double
     let posY: Double
@@ -239,7 +232,7 @@ struct MuseumRoomData: Codable {
 }
 
 struct ExpositionData: Codable {
-    let id: Int?
+    let id: Int64?
     let titulo: String
     let posX: Double
     let posY: Double

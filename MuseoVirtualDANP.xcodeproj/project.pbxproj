@@ -47,6 +47,8 @@
 		620B49D72CB0FDD200627F64 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */,
+				8C89A5662CB6CAB700592CFD /* Authentication */,
 				620B49D82CB1009700627F64 /* MuseumMap */,
 			);
 			path = Scenes;
@@ -58,6 +60,16 @@
 				620B49DA2CB100D600627F64 /* MuseumMapView.swift */,
 			);
 			path = MuseumMap;
+			sourceTree = "<group>";
+		};
+		8C89A5662CB6CAB700592CFD /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */,
+				620B49E12CB1D1AD00627F64 /* HomeView.swift */,
+				620B49DF2CB1CF2D00627F64 /* LoginView.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		8CFBBFBA2CAF2E84002E9817 = {
@@ -85,10 +97,6 @@
 				8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */,
 				8CFBBFD12CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld */,
 				8CFBBFCC2CAF2E87002E9817 /* Preview Content */,
-				620B49DF2CB1CF2D00627F64 /* LoginView.swift */,
-				620B49E12CB1D1AD00627F64 /* HomeView.swift */,
-				620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */,
-				6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */,
 			);
 			path = MuseoVirtualDANP;
 			sourceTree = "<group>";
