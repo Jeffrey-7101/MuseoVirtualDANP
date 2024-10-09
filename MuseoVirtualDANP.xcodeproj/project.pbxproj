@@ -62,6 +62,13 @@
 			path = MuseumMap;
 			sourceTree = "<group>";
 		};
+		62FD79312CB70567003F95A5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8C89A5662CB6CAB700592CFD /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +98,7 @@
 		8CFBBFC52CAF2E84002E9817 /* MuseoVirtualDANP */ = {
 			isa = PBXGroup;
 			children = (
+				62FD79312CB70567003F95A5 /* Models */,
 				620B49D72CB0FDD200627F64 /* Scenes */,
 				8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */,
 				8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */,
