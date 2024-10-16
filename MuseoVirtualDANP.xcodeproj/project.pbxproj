@@ -17,6 +17,8 @@
 		8CFBBFCE2CAF2E87002E9817 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCD2CAF2E87002E9817 /* Preview Assets.xcassets */; };
 		8CFBBFD02CAF2E87002E9817 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */; };
 		8CFBBFD32CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFD12CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld */; };
+		8CFDA3BD2CC00ACE0074238A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFDA3BC2CC00ACE0074238A /* UserData.swift */; };
+		8CFDA3BF2CC00ECE0074238A /* userViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFDA3BE2CC00ECE0074238A /* userViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		8CFBBFCD2CAF2E87002E9817 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8CFBBFD22CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MuseoVirtualDANP.xcdatamodel; sourceTree = "<group>"; };
+		8CFDA3BC2CC00ACE0074238A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		8CFDA3BE2CC00ECE0074238A /* userViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +54,8 @@
 				6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */,
 				8C89A5662CB6CAB700592CFD /* Authentication */,
 				620B49D82CB1009700627F64 /* MuseumMap */,
+				8CFDA3BC2CC00ACE0074238A /* UserData.swift */,
+				8CFDA3BE2CC00ECE0074238A /* userViewModel.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -190,11 +196,13 @@
 				620B49E42CB1D1EB00627F64 /* CreatedAccountView.swift in Sources */,
 				8CFBBFD32CAF2E87002E9817 /* MuseoVirtualDANP.xcdatamodeld in Sources */,
 				620B49E02CB1CF2D00627F64 /* LoginView.swift in Sources */,
+				8CFDA3BD2CC00ACE0074238A /* UserData.swift in Sources */,
 				8CFBBFD02CAF2E87002E9817 /* Persistence.swift in Sources */,
 				620B49DB2CB100D600627F64 /* MuseumMapView.swift in Sources */,
 				620B49E22CB1D1AD00627F64 /* HomeView.swift in Sources */,
 				8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */,
 				6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */,
+				8CFDA3BF2CC00ECE0074238A /* userViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
