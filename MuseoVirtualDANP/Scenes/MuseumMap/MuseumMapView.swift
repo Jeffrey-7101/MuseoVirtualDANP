@@ -114,7 +114,7 @@ struct RoomView: View {
                 }
             }
         }.border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2)
-    }
+    }	
 }
 
 // Vista del Mapa del Museo
@@ -122,7 +122,7 @@ struct MuseumMapView: View {
     @FetchRequest(
         entity: MuseumRoomEntity.entity(),
         sortDescriptors: []
-    ) var rooms: FetchedResults<MuseumRoomEntity>
+    ) var rooms: FetchedResults<MuseumRoomEntity> // similar al @state, pero con los datos de la base de datos.
     
     let targetSize: CGSize
     @State private var selectedRoom: UUID?  // Estado para la sala seleccionada
