@@ -6,7 +6,7 @@ struct TabNavigatioView: View {
         var body: some View {
             TabView {
                 // Primera pestaña - Listado
-                ListadoView()
+                ExposicionesView()
                     .tabItem {
                         Image(systemName: "list.bullet")
                         Text("Listado")
