@@ -19,7 +19,7 @@ class ExposicionesViewModel: ObservableObject {
         guard !isLoading, canLoadMorePages else { return }
         isLoading = true
         
-        let urlString = "https://museo.epis-dev.site/api/museo/exposiciones/?page=\(currentPage)&page_size=5"
+        let urlString = "https://museo.epis-dev.site/api/museo/exposiciones/?page=\(currentPage)&page_size=6"
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTaskPublisher(for: url)

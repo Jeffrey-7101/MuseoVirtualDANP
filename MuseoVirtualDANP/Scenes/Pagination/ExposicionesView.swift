@@ -40,48 +40,93 @@ struct ExposicionesView: View {
     }
 }
 
+
 struct ExposicionRow: View {
     let exposicion: ExposicionDate
     
     var body: some View {
-        HStack{
-            
-            if let imageName = exposicion.imagen {
-                Image(imageName)
+        HStack(alignment: .top, spacing: 16) {
+            // Imagen usando AsyncImage para cargar desde URL
+            if let imageUrl = URL(string: exposicion.imagen ?? "") {
+                AsyncImage(url: imageUrl) { phase in
+                    switch phase {
+                    case .empty:
+                        // Placeholder mientras se carga la imagen
+                        ProgressView()
+                            .frame(width: 60, height: 60)
+                            .background(Color.gray.opacity(0.3))
+                            .cornerRadius(8)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(8)
+                    case .failure:
+                        // Icono de error si falla la carga de la imagen
+                        Image(systemName: "photo.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.gray)
+                            .background(Color.gray.opacity(0.3))
+                            .cornerRadius(8)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            } else {
+                // Icono si no hay URL de imagen
+                Image(systemName: "photo.fill")
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .scaledToFit()
+                    .frame(width: 60, height: 60)
+                    .foregroundColor(.gray)
+                    .background(Color.gray.opacity(0.3))
                     .cornerRadius(8)
             }
-            
+
+            // Información de la exposición
             VStack(alignment: .leading, spacing: 8) {
                 Text(exposicion.titulo)
                     .font(.headline)
+                    .foregroundColor(.primary)
+                
                 Text("Tecnica: \(exposicion.tecnica)")
                     .font(.subheadline)
-                Text("Categoria: \(exposicion.categoria)")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
-                Text("Año: \(exposicion.ano)")
-                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                HStack {
+                    Image(systemName: "tag.fill")
+                        .foregroundColor(.blue)
+                    Text(exposicion.categoria)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                
+                HStack {
+                    Image(systemName: "calendar")
+                        .foregroundColor(.green)
+                    Text("Año: \(exposicion.ano)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
                 Text(exposicion.descripcion)
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundColor(.secondary)
+                    .lineLimit(3)
             }
-            //.padding()
-            //.background(Color(hex: exposicion.bg_color).opacity(0.1))
-            //.cornerRadius(10)
-            //.overlay(
-                //RoundedRectangle(cornerRadius: 10)
-                    //.stroke(Color(hex: exposicion.border_color), lineWidth: 1)
-            //)
-            //.shadow(color: .gray, radius: 5, x: 0, y:5)
-            //.padding([.top, .horizontal])
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, 8)
-        .cornerRadius(10)
+        .padding(12)
         .background(Color(hex: exposicion.bg_color).opacity(0.1))
+        .cornerRadius(12)
+        .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 4)
     }
 }
+
+
 
 extension Color {
     init(hex: String, alpha: CGFloat) {
