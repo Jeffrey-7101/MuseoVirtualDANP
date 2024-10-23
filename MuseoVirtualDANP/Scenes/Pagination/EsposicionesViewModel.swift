@@ -22,6 +22,8 @@ class ExposicionesViewModel: ObservableObject {
         let urlString = "https://museo.epis-dev.site/api/museo/exposiciones/?page=\(currentPage)&page_size=6"
         guard let url = URL(string: urlString) else { return }
         
+        print("load new page")
+        
         URLSession.shared.dataTaskPublisher(for: url)
             .map { $0.data }
             .decode(type: APIResponse.self, decoder: JSONDecoder())
