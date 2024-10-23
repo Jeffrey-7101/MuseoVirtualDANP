@@ -44,20 +44,42 @@ struct ExposicionRow: View {
     let exposicion: ExposicionDate
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(exposicion.titulo)
-                .font(.headline)
-            Text("Tecnica: \(exposicion.tecnica)")
-                .font(.subheadline)
-            Text("Categoria: \(exposicion.categoria)")
-                .font(.subheadline)
-            Text("Año: \(exposicion.ano)")
-                .font(.subheadline)
-            Text(exposicion.descripcion)
-                .font(.body)
+        HStack{
+            
+            if let imageName = exposicion.imagen {
+                Image(imageName)
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(8)
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text(exposicion.titulo)
+                    .font(.headline)
+                Text("Tecnica: \(exposicion.tecnica)")
+                    .font(.subheadline)
+                Text("Categoria: \(exposicion.categoria)")
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                Text("Año: \(exposicion.ano)")
+                    .font(.subheadline)
+                Text(exposicion.descripcion)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            //.padding()
+            //.background(Color(hex: exposicion.bg_color).opacity(0.1))
+            //.cornerRadius(10)
+            //.overlay(
+                //RoundedRectangle(cornerRadius: 10)
+                    //.stroke(Color(hex: exposicion.border_color), lineWidth: 1)
+            //)
+            //.shadow(color: .gray, radius: 5, x: 0, y:5)
+            //.padding([.top, .horizontal])
         }
-        .padding()
-        .background()
+        .padding(.vertical, 8)
+        .cornerRadius(10)
+        .background(Color(hex: exposicion.bg_color).opacity(0.1))
     }
 }
 

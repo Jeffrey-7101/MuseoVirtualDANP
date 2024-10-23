@@ -19,6 +19,7 @@ struct ExposicionDate: Decodable, Identifiable, Equatable {
     let bg_color: String
     let border_color: String
     let border: Bool
+    let imagen: String?
 }
 
 // Modelo APIResponse
