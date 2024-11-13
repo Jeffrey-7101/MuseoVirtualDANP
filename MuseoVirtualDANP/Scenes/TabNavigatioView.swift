@@ -13,12 +13,21 @@ struct TabNavigatioView: View {
                     }
                 
                 // Segunda pestaña - QR
-                HomeView(isLoggedIn: $isloggedIn)
-                    .tabItem {
-                        Image(systemName: "qrcode.viewfinder")
-                        Text("QR")
-                    }
                 
+//                QrView()
+//                QRView2()
+                QRScannerView()
+                    .tabItem {
+                         Image(systemName: "qrcode.viewfinder")
+                        Text("QR")
+                      }
+                
+                //HomeView(isLoggedIn: $isloggedIn)
+                  //  .tabItem {
+                    //    Image(systemName: "qrcode.viewfinder")
+                      //  Text("QR")
+                //    }
+                //
                 // Tercera pestaña - Mapa
                 VStack {
                     MuseumMapView(targetSize: CGSize(width: 300, height: 640))

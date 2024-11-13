@@ -11,30 +11,34 @@ struct ExposicionesView: View {
     @StateObject private var viewModel = ExposicionesViewModel()
     
     var body: some View {
-        ScrollView{
-            LazyVStack{
-                ForEach(viewModel.exposiciones) { exposicion in
-                    ExposicionRow(exposicion: exposicion)
-                        .onAppear{
-                            if exposicion.id == viewModel.exposiciones.last?.id {
-                                viewModel.loadMoreExposiciones()
-                            }
+        NavigationView {
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.exposiciones) { exposicion in
+                        NavigationLink(destination: ExposicionDetalleView(exposicion: exposicion)) {
+                            ExposicionRow(exposicion: exposicion)
+                                .onAppear {
+                                    if exposicion.id == viewModel.exposiciones.last?.id {
+                                        viewModel.loadMoreExposiciones()
+                                    }
+                                }
                         }
+                    }
+                    
+                    // Indicador de carga si está cargando
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .padding()
+                    }
                 }
-                
-                // Indicador de carga si esta cargando
-                if viewModel.isLoading {
-                    ProgressView()
-                        .padding()
-                }
+                .padding()
             }
-            .padding()
-        }
-        .navigationTitle("Exposiciones")
-        .onAppear{
-            // Carga los datos si inicialmente esta vacia
-            if viewModel.exposiciones.isEmpty {
-                viewModel.loadMoreExposiciones()
+            .navigationTitle("Exposiciones")
+            .onAppear {
+                // Cargar datos si la lista inicialmente está vacía
+                if viewModel.exposiciones.isEmpty {
+                    viewModel.loadMoreExposiciones()
+                }
             }
         }
     }
@@ -125,7 +129,6 @@ struct ExposicionRow: View {
         .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 4)
     }
 }
-
 
 
 extension Color {

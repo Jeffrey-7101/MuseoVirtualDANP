@@ -135,7 +135,7 @@ struct MuseumMapView: View {
         let sortedRooms = rooms.sorted { room1, room2 in
             if let selectedRoom = selectedRoom {
                 return room1.id == selectedRoom ? false : true
-            }
+            }	
             return true
         }
 
@@ -185,7 +185,9 @@ struct MuseumMapView: View {
                             }
                         }
                     },
-                    onTapExposition: { _ in }
+                    onTapExposition: { exposition in
+                        print(exposition.name)
+                    }
                 )
             }
         }
