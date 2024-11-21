@@ -54,15 +54,19 @@ class FoodListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        return URLSession(configuration: configuration, delegate: URLSessionPinningDelegate(), delegateQueue: nil)
+        if false { // for debug
+            let configuration = URLSessionConfiguration.default
+            return URLSession(configuration: configuration, delegate: URLSessionPinningDelegate(), delegateQueue: nil)
+        } else {
+            return URLSession.shared
+        }
     }()
     
     func loadMoreFoods() {
         guard !isLoading, canLoadMorePages else { return }
         isLoading = true
         
-        let urlString = "https://museo.epis-dev.site/api/food/?page=\(currentPage)&page_size=6"
+        let urlString = "https://museo.epis-dev.site/api/alimentos/?page=\(currentPage)&page_size=6"
         guard let url = URL(string: urlString) else { return }
         
         print("Loading new page of foods")

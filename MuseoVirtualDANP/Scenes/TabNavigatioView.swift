@@ -13,16 +13,10 @@ struct TabNavigatioView: View {
                     }
                 
                 
-//                QRScannerView()
-//                    .tabItem {
-//                         Image(systemName: "qrcode.viewfinder")
-//                        Text("QR")
-//                      }
-                
                 HomeView(isLoggedIn: $isloggedIn)
                     .tabItem {
-                        Image(systemName: "qrcode.viewfinder")
-                        Text("QR")
+                        Image(systemName: "person.crop.circle")
+                        Text("Home")
                     }
                 
 //                 Tercera pestaña
