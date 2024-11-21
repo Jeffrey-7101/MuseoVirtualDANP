@@ -26,7 +26,7 @@ struct TabNavigatioView: View {
                     }
                 .tabItem {
                     Image(systemName: "map")
-                    Text("Mapa")
+                    Text("Estadisticas")
                 }
             }
             .onAppear {
