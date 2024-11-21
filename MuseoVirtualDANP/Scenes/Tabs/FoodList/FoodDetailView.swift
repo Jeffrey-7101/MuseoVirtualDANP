@@ -1,0 +1,6 @@
+//
+// ExposicionDetalleView.swift
+
+import SwiftUI
+
+
