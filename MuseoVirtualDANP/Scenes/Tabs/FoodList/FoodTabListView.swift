@@ -48,13 +48,15 @@ class URLSessionPinningDelegate: NSObject, URLSessionDelegate {
 
 class FoodListViewModel: ObservableObject {
     @Published var alimentos: [FoodData] = []
+    @Published var searchText: String = ""
     @Published var isLoading = false
+    
     private var currentPage = 1
     private var canLoadMorePages = true
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var session: URLSession = {
-        if false { // for debug
+        if false { // for debug. NO MODIFICAR.
             let configuration = URLSessionConfiguration.default
             return URLSession(configuration: configuration, delegate: URLSessionPinningDelegate(), delegateQueue: nil)
         } else {
@@ -62,14 +64,34 @@ class FoodListViewModel: ObservableObject {
         }
     }()
     
-    func loadMoreFoods() {
+    init() {
+        $searchText
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] searchText in
+                self?.resetAndSearchFoods(with: searchText)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func resetAndSearchFoods(with searchText: String) {
+        alimentos = []
+        currentPage = 1
+        canLoadMorePages = true
+        loadMoreFoods(search: searchText)
+    }
+    
+    func loadMoreFoods(search: String = "") {
         guard !isLoading, canLoadMorePages else { return }
         isLoading = true
         
-        let urlString = "https://museo.epis-dev.site/api/alimentos/?page=\(currentPage)&page_size=6"
+        var urlString = "https://museo.epis-dev.site/api/alimentos/?page=\(currentPage)&page_size=6"
+        if !search.isEmpty {
+            urlString += "&search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        }
         guard let url = URL(string: urlString) else { return }
         
-        print("Loading new page of foods")
+        print("Loading new page of foods with search: \(search)")
         
         session.dataTaskPublisher(for: url)
             .map { $0.data }
@@ -91,35 +113,75 @@ class FoodListViewModel: ObservableObject {
 
 struct FoodListView: View {
     @StateObject private var viewModel = FoodListViewModel()
-    
+
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.alimentos) { alimento in
-                        NavigationLink(destination: FoodDetailView(alimento: alimento)) {
-                            FoodRow(alimento: alimento)
-                                .onAppear {
-                                    if alimento.codigo == viewModel.alimentos.last?.codigo {
-                                        viewModel.loadMoreFoods()
+            VStack {
+                SearchBar(text: $viewModel.searchText)
+                    .padding(.horizontal)
+                
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        ForEach(viewModel.alimentos) { alimento in
+                            NavigationLink(destination: FoodDetailView(alimento: alimento)) {
+                                FoodRow(alimento: alimento)
+                                    .onAppear {
+                                        if alimento.codigo == viewModel.alimentos.last?.codigo {
+                                            viewModel.loadMoreFoods(search: viewModel.searchText)
+                                        }
                                     }
-                                }
+                            }
+                        }
+                        
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding()
                         }
                     }
-                    
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .padding()
-                    }
+                    .padding(.horizontal)
                 }
-                .padding()
             }
             .navigationTitle("Foods")
+            .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
             .onAppear {
                 if viewModel.alimentos.isEmpty {
                     viewModel.loadMoreFoods()
                 }
             }
+        }
+    }
+}
+
+
+struct SearchBar: View {
+    @Binding var text: String
+    
+    var body: some View {
+        HStack {
+            TextField("Search Foods", text: $text)
+                .padding(7)
+                .padding(.horizontal, 25)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+                .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 8)
+                        
+                        if !text.isEmpty {
+                            Button(action: {
+                                text = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
+                            }
+                        }
+                    }
+                )
+                .padding(.horizontal, 10)
         }
     }
 }
