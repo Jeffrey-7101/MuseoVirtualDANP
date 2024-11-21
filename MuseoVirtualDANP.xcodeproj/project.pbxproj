@@ -22,8 +22,6 @@
 		62FD79362CC84376003F95A5 /* FoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79352CC84376003F95A5 /* FoodData.swift */; };
 		62FD793A2CC84F55003F95A5 /* FoodTabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79392CC84F55003F95A5 /* FoodTabListView.swift */; };
 		62FD793C2CC85CFE003F95A5 /* FoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD793B2CC85CFE003F95A5 /* FoodViewModel.swift */; };
-		62FD79BE2CD1C25B003F95A5 /* museo.der in Resources */ = {isa = PBXBuildFile; fileRef = 62FD79BD2CD1C25B003F95A5 /* museo.der */; };
-		62FD79C22CD1C82B003F95A5 /* pinnedCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */; };
 		8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */; };
 		8CFBBFCB2CAF2E87002E9817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */; };
 		8CFBBFCE2CAF2E87002E9817 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCD2CAF2E87002E9817 /* Preview Assets.xcassets */; };
@@ -41,14 +39,13 @@
 		625535772CEFC59700E11B5D /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		625535792CEFC5C600E11B5D /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
 		6255357B2CEFC5F400E11B5D /* FoodChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodChartsView.swift; sourceTree = "<group>"; };
+		6255357D2CEFCA4100E11B5D /* museo.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = museo.der; sourceTree = "<group>"; };
 		6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigatioView.swift; sourceTree = "<group>"; };
 		62DFD0EB2CDB01D000C074DD /* QRView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView3.swift; sourceTree = "<group>"; };
 		62DFD0ED2CE4208600C074DD /* FoodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailView.swift; sourceTree = "<group>"; };
 		62FD79352CC84376003F95A5 /* FoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodData.swift; sourceTree = "<group>"; };
 		62FD79392CC84F55003F95A5 /* FoodTabListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTabListView.swift; sourceTree = "<group>"; };
 		62FD793B2CC85CFE003F95A5 /* FoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewModel.swift; sourceTree = "<group>"; };
-		62FD79BD2CD1C25B003F95A5 /* museo.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = museo.der; path = ../../../../Downloads/museo.der; sourceTree = "<group>"; };
-		62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = pinnedCertificate.cer; sourceTree = "<group>"; };
 		8CFBBFC32CAF2E84002E9817 /* MuseoVirtualDANP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuseoVirtualDANP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseoVirtualDANPApp.swift; sourceTree = "<group>"; };
 		8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +145,7 @@
 		8CFBBFBA2CAF2E84002E9817 = {
 			isa = PBXGroup;
 			children = (
+				6255357D2CEFCA4100E11B5D /* museo.der */,
 				8CFBBFC52CAF2E84002E9817 /* MuseoVirtualDANP */,
 				8CFBBFC42CAF2E84002E9817 /* Products */,
 			);
@@ -164,8 +162,6 @@
 		8CFBBFC52CAF2E84002E9817 /* MuseoVirtualDANP */ = {
 			isa = PBXGroup;
 			children = (
-				62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */,
-				62FD79BD2CD1C25B003F95A5 /* museo.der */,
 				62FD79312CB70567003F95A5 /* Models */,
 				620B49D72CB0FDD200627F64 /* Scenes */,
 				8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */,
@@ -245,8 +241,6 @@
 			files = (
 				8CFBBFCE2CAF2E87002E9817 /* Preview Assets.xcassets in Resources */,
 				8CFBBFCB2CAF2E87002E9817 /* Assets.xcassets in Resources */,
-				62FD79C22CD1C82B003F95A5 /* pinnedCertificate.cer in Resources */,
-				62FD79BE2CD1C25B003F95A5 /* museo.der in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
