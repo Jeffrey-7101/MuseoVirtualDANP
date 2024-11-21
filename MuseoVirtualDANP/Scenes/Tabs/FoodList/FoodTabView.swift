@@ -4,7 +4,7 @@
 import SwiftUI
 
 struct ExposicionDetalleView: View {
-    let exposicion: ExposicionDate
+    let exposicion: FoodData
 
     var body: some View {
         ScrollView {

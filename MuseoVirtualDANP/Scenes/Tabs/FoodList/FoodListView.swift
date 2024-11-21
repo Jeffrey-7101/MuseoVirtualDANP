@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExposicionesView: View {
-    @StateObject private var viewModel = ExposicionesViewModel()
+    @StateObject private var viewModel = FoodListViewModel()
     
     var body: some View {
         NavigationView {
@@ -46,7 +46,7 @@ struct ExposicionesView: View {
 
 
 struct ExposicionRow: View {
-    let exposicion: ExposicionDate
+    let exposicion: FoodData
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {

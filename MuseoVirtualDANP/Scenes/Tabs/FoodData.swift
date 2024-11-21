@@ -8,7 +8,7 @@
 import Foundation
 
 // Modelo para cada exposicion
-struct ExposicionDate: Decodable, Identifiable, Equatable {
+struct FoodData: Decodable, Identifiable, Equatable {
     let id: Int
     let titulo: String
     let tecnica: String
@@ -27,5 +27,5 @@ struct APIResponse: Decodable {
     let count: Int
     let next: String?
     let previus: String?
-    let results: [ExposicionDate]
+    let results: [FoodData]
 }
