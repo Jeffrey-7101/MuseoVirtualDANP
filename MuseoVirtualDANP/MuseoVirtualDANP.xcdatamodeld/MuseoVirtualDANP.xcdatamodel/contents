@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23H122" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ExpositionEntity" representedClassName="ExpositionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="absolute_position" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="absolutePosition" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="ano" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="autor" optional="YES" attributeType="String"/>
         <attribute name="bg_color" optional="YES" attributeType="String"/>
         <attribute name="border" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="border_color" optional="YES" attributeType="String"/>
+        <attribute name="categoria" optional="YES" attributeType="String"/>
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
         <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imagen" optional="YES" attributeType="String"/>
         <attribute name="integer_id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="posX" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="posY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="tecnica" optional="YES" attributeType="String"/>
         <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MuseumRoomEntity" inverseName="expositions" inverseEntity="MuseumRoomEntity"/>
     </entity>
@@ -18,8 +25,10 @@
         <attribute name="bg_color" optional="YES" attributeType="String"/>
         <attribute name="border" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="border_color" optional="YES" attributeType="String"/>
+        <attribute name="descripcion" optional="YES" attributeType="String"/>
         <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imagen" optional="YES" attributeType="String"/>
         <attribute name="integer_id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="posX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

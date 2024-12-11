@@ -9,17 +9,14 @@ struct MuseumRoom {
     let bgColor: String
     let borderColor: String
     let drawBorder: Bool
-    var expositions: [Exposition]
+    var expositions: [ExpositionViewData]
 }
 
-struct Exposition {
+struct ExpositionViewData {
     let id: UUID
-    let name: String
     let shape: ShapeType
-    let bgColor: String
-    let borderColor: String
-    let drawBorder: Bool
     let relativeFrame: CGRect
+    let exposition: Exposicion
     
     enum ShapeType {
         case rectangle
@@ -30,21 +27,21 @@ struct Exposition {
 
 // View to display a single exposition within a room
 struct ExpositionView: View {
-    let exposition: Exposition      // The exposition to display
+    let expositionData: ExpositionViewData      // The exposition to display
     let roomOrigin: CGPoint         // The origin point of the room
     let scale: CGFloat              // The scale factor for adjusting size and position
     let onTap: () -> Void           // Action to perform when the exposition is tapped
 
     var body: some View {
         Rectangle()                                                     // Draw a rectangle for the exposition
-            .fill(Color(hex: exposition.bgColor))                      // Fill the rectangle with the specified background color
+            .fill(Color(hex: expositionData.exposition.bg_color))                      // Fill the rectangle with the specified background color
             .frame(
-                width: exposition.relativeFrame.width * scale,        // Scale the width based on the scale factor
-                height: exposition.relativeFrame.height * scale       // Scale the height based on the scale factor
+                width: expositionData.relativeFrame.width * scale,        // Scale the width based on the scale factor
+                height: expositionData.relativeFrame.height * scale       // Scale the height based on the scale factor
             )
             .position(
-                x: (roomOrigin.x + exposition.relativeFrame.midX) * scale,  // Calculate x-position with scaling
-                y: (roomOrigin.y + exposition.relativeFrame.midY) * scale   // Calculate y-position with scaling
+                x: (roomOrigin.x + expositionData.relativeFrame.midX) * scale,  // Calculate x-position with scaling
+                y: (roomOrigin.y + expositionData.relativeFrame.midY) * scale   // Calculate y-position with scaling
             )
             .onTapGesture {                                            // Handle tap gesture
                 onTap()                                                // Trigger the tap action
@@ -61,9 +58,10 @@ struct RoomView: View {
     let isSelected: Bool                        // Flag to determine if the room is selected
     let adjustedOrigin: CGPoint                 // The adjusted origin point for the room
     let onTapRoom: () -> Void                   // Action to perform when the room is tapped
-    let onTapExposition: (Exposition) -> Void   // Action to perform when an exposition is tapped
+    let onTapExposition: (ExpositionViewData) -> Void   // Action to perform when an exposition is tapped
 
     var body: some View {
+        
         ZStack {                                                    // Overlay elements in a stack
             // Draw the room with optional border
             Rectangle()
@@ -95,7 +93,7 @@ struct RoomView: View {
             // Display all expositions within the room
             ForEach(room.expositions, id: \ .id) { exposition in
                 ExpositionView(
-                    exposition: exposition,               // Pass the exposition to the view
+                    expositionData: exposition,               // Pass the exposition to the view
                     roomOrigin: adjustedOrigin,           // Use the adjusted room origin
                     scale: scale,                         // Apply the scale factor
                     onTap: {
@@ -116,8 +114,11 @@ struct MuseumMapView: View {
         sortDescriptors: []
     ) var rooms: FetchedResults<MuseumRoomEntity>      // Fetch request to retrieve room data from CoreData
     
-    let targetSize: CGSize                            // The target size of the museum map view
+    public let targetSize: CGSize                            // The target size of the museum map view
     @State private var selectedRoom: UUID? = nil      // State to track which room is selected
+    
+    @State private var isLinkActive = false
+    @State private var selectedExposition:Exposicion = Exposicion(id: 0, titulo: "", tecnica: "", categoria: "", descripcion: "", ano: 0, imagen: "", posX: 0, posY: 0, width: 0, height: 0, bg_color: "", border_color: "", border: false)
     
     var body: some View {
         let originalSize = CGSize(width: 11, height: 23) // Original map size for scaling reference
@@ -158,7 +159,9 @@ struct MuseumMapView: View {
                         }
                     },
                     onTapExposition: { exposition in
-                        print("Selected exposition: \(exposition.name)") // Print the name of the selected exposition
+                        print("Selected exposition: \(exposition.exposition.titulo)") // Print the name of the selected exposition
+                        self.selectedExposition = exposition.exposition
+                        self.isLinkActive = true
                     }
                 )
             }
@@ -167,6 +170,12 @@ struct MuseumMapView: View {
         .onAppear {
             fetchMuseumData()                      // Fetch the initial museum data when the view appears
         }
+        .background(
+            NavigationLink(destination: ExposicionDetalleView(exposicion: self.selectedExposition), isActive: $isLinkActive) {
+                EmptyView()
+            }
+            .hidden()
+        )
     }
 }
 
@@ -182,14 +191,26 @@ func mapRoomEntityToModel(_ room: MuseumRoomEntity, expositions: [ExpositionEnti
         borderColor: room.border_color ?? "#008850",
         drawBorder: room.border,
         expositions: expositions.map {
-            Exposition(
+            ExpositionViewData(
                 id: $0.id ?? UUID(),
-                name: $0.name ?? "Unnamed Exposition",
                 shape: .rectangle,
-                bgColor: $0.bg_color ?? "#008800",
-                borderColor: $0.border_color ?? "#508800",
-                drawBorder: $0.border,
-                relativeFrame: CGRect(x: $0.posX, y: $0.posY, width: $0.width, height: $0.height)
+                relativeFrame: CGRect(x: $0.posX, y: $0.posY, width: $0.width, height: $0.height),
+                exposition: Exposicion(
+                    id: Int($0.integer_id),
+                    titulo: $0.name ?? "Unnamed Exposition",
+                    tecnica: $0.tecnica ?? "",  // Fill with actual data if available
+                    categoria: $0.categoria ?? "", // Fill with actual data if available
+                    descripcion: $0.descripcion ?? "", // Fill with actual data if available
+                    ano: Int($0.ano), // Fill with actual data if available
+                    imagen: $0.imagen,
+                    posX: $0.posX,
+                    posY: $0.posY,
+                    width: $0.width,
+                    height: $0.height,
+                    bg_color: $0.bg_color ?? "#008800",
+                    border_color: $0.border_color ?? "#508800",
+                    border: $0.border
+                )
             )
         }
     )
@@ -249,6 +270,8 @@ func fetchOrCreateRoomEntity(roomData: MuseumRoomData, in context: NSManagedObje
     roomEntity.id = UUID()
     roomEntity.integer_id = roomData.id!
     roomEntity.name = roomData.nombre
+    roomEntity.descripcion = roomData.descripcion
+    roomEntity.imagen = roomData.imagen
     roomEntity.posX = roomData.posX
     roomEntity.posY = roomData.posY
     roomEntity.width = roomData.width
@@ -260,67 +283,22 @@ func fetchOrCreateRoomEntity(roomData: MuseumRoomData, in context: NSManagedObje
     return roomEntity
 }
 
-func fetchOrCreateExpositionEntity(from expositionData: ExpositionData, in context: NSManagedObjectContext) -> ExpositionEntity {
-    let fetchRequest: NSFetchRequest<ExpositionEntity> = ExpositionEntity.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "integer_id == %d", expositionData.id!)
-
-    let expositionEntity: ExpositionEntity
-
-    do {
-        let fetchedExpositions = try context.fetch(fetchRequest)
-        if let existingExposition = fetchedExpositions.first {
-            // Update the existing entity
-            expositionEntity = existingExposition
-        } else {
-            // Create a new entity if none exists
-            expositionEntity = ExpositionEntity(context: context)
-            expositionEntity.id = UUID()
-            expositionEntity.integer_id = expositionData.id!
-        }
-
-        // Update fields
-        expositionEntity.name = expositionData.titulo
-        expositionEntity.posX = expositionData.posX
-        expositionEntity.posY = expositionData.posY
-        expositionEntity.width = expositionData.width
-        expositionEntity.height = expositionData.height
-        expositionEntity.bg_color = expositionData.bg_color
-        expositionEntity.border_color = expositionData.border_color
-        expositionEntity.border = expositionData.border
-
-    } catch {
-        print("Error fetching ExpositionEntity: \(error)")
-        // Fallback to creating a new entity if fetch fails
-        expositionEntity = ExpositionEntity(context: context)
-        expositionEntity.id = UUID()
-        expositionEntity.integer_id = expositionData.id!
-    }
-
-    return expositionEntity
-}
-
 func fetchOrCreateExpositionEntity(expositionData: ExpositionData, in context: NSManagedObjectContext, parentRoom: MuseumRoomEntity) -> ExpositionEntity {
     let fetchRequest: NSFetchRequest<ExpositionEntity> = ExpositionEntity.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "integer_id == %d", expositionData.id!)
 
     do {
         let fetchedExpositions = try context.fetch(fetchRequest)
-        let expositionEntity: ExpositionEntity
-
-        if let existingExposition = fetchedExpositions.first {
-            // Update existing exposition entity
-            expositionEntity = existingExposition
-            print("Updating existing exposition with integer_id \(expositionData.id!)")
-        } else {
-            // Create a new exposition entity
-            expositionEntity = ExpositionEntity(context: context)
-            expositionEntity.id = UUID(uuidString: String(expositionData.id!)) ?? UUID()
-            expositionEntity.integer_id = expositionData.id!
-            print("Creating new exposition with integer_id \(expositionData.id!)")
-        }
-
-        // Update or set fields for the exposition
+        let expositionEntity = fetchedExpositions.first ?? ExpositionEntity(context: context)
+        
+        expositionEntity.id = UUID()
+        expositionEntity.integer_id = expositionData.id!
         expositionEntity.name = expositionData.titulo
+        expositionEntity.tecnica = expositionData.tecnica
+        expositionEntity.categoria = expositionData.categoria
+        expositionEntity.descripcion = expositionData.descripcion
+        expositionEntity.ano = Int64(expositionData.ano)
+        expositionEntity.imagen = expositionData.imagen
         expositionEntity.posX = expositionData.posX
         expositionEntity.posY = expositionData.posY
         expositionEntity.width = expositionData.width
@@ -328,8 +306,9 @@ func fetchOrCreateExpositionEntity(expositionData: ExpositionData, in context: N
         expositionEntity.bg_color = expositionData.bg_color
         expositionEntity.border_color = expositionData.border_color
         expositionEntity.border = expositionData.border
+        expositionEntity.absolute_position = expositionData.absolute_position
+        expositionEntity.autor = expositionData.autor
 
-        // Add relationship to parent room if not already set
         if !parentRoom.expositions!.contains(expositionEntity) {
             parentRoom.addToExpositions(expositionEntity)
         }
@@ -344,6 +323,8 @@ func fetchOrCreateExpositionEntity(expositionData: ExpositionData, in context: N
 struct MuseumRoomData: Codable {
     let id: Int64?
     let nombre: String
+    let descripcion: String
+    let imagen: String?
     let posX: Double
     let posY: Double
     let width: Double
@@ -357,6 +338,11 @@ struct MuseumRoomData: Codable {
 struct ExpositionData: Codable {
     let id: Int64?
     let titulo: String
+    let tecnica: String
+    let categoria: String
+    let descripcion: String
+    let ano: Int
+    let imagen: String?
     let posX: Double
     let posY: Double
     let width: Double
@@ -364,5 +350,8 @@ struct ExpositionData: Codable {
     let bg_color: String
     let border_color: String
     let border: Bool
+    let absolute_position: Bool
+    let autor: String
 }
+
 

@@ -30,9 +30,12 @@ struct TabNavigatioView: View {
                 //
                 // Tercera pestaña - Mapa
                 VStack {
-                    MuseumMapView(targetSize: CGSize(width: 300, height: 640))
-                        .frame(maxHeight: .infinity) // Asegura que el contenido respete el área segura inferior
-                    Spacer() // Empuja el contenido hacia arriba, respetando la barra de pestañas
+                    
+                    NavigationView {
+                        MuseumMapView(targetSize: CGSize(width: 300, height: 640))
+                            .frame(maxHeight: .infinity) // Asegura que el contenido respete el área segura inferior
+                        Spacer() // Empuja el contenido hacia arriba, respetando la barra de pestañas
+                    }
                 }
                 .tabItem {
                     Image(systemName: "map")
