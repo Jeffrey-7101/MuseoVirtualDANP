@@ -12,6 +12,11 @@
 		620B49E22CB1D1AD00627F64 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49E12CB1D1AD00627F64 /* HomeView.swift */; };
 		620B49E42CB1D1EB00627F64 /* CreatedAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */; };
 		6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */; };
+		626E3DF12CF84B4E004860A0 /* ExposicionesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626E3DF02CF84B4E004860A0 /* ExposicionesRepository.swift */; };
+		626E3DF82CF8CED0004860A0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626E3DF72CF8CED0004860A0 /* NetworkManager.swift */; };
+		62ABA8962D091522002545D2 /* museo.der in Resources */ = {isa = PBXBuildFile; fileRef = 62ABA8952D091521002545D2 /* museo.der */; };
+		62ABA89A2D0916BE002545D2 /* ColorHexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62ABA8992D0916BE002545D2 /* ColorHexExtension.swift */; };
+		62ABA89C2D091785002545D2 /* ExpositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62ABA89B2D091785002545D2 /* ExpositionView.swift */; };
 		62DFD0E82CDAF7AF00C074DD /* QrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DFD0E72CDAF7AF00C074DD /* QrView.swift */; };
 		62DFD0EA2CDAFE7800C074DD /* QRView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DFD0E92CDAFE7800C074DD /* QRView2.swift */; };
 		62DFD0EC2CDB01D000C074DD /* QRView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DFD0EB2CDB01D000C074DD /* QRView3.swift */; };
@@ -19,7 +24,6 @@
 		62FD79362CC84376003F95A5 /* Exposicion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79352CC84376003F95A5 /* Exposicion.swift */; };
 		62FD793A2CC84F55003F95A5 /* ExposicionesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79392CC84F55003F95A5 /* ExposicionesView.swift */; };
 		62FD793C2CC85CFE003F95A5 /* EsposicionesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD793B2CC85CFE003F95A5 /* EsposicionesViewModel.swift */; };
-		62FD79BE2CD1C25B003F95A5 /* museo.der in Resources */ = {isa = PBXBuildFile; fileRef = 62FD79BD2CD1C25B003F95A5 /* museo.der */; };
 		62FD79C22CD1C82B003F95A5 /* pinnedCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */; };
 		8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */; };
 		8CFBBFCB2CAF2E87002E9817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */; };
@@ -34,6 +38,11 @@
 		620B49E12CB1D1AD00627F64 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedAccountView.swift; sourceTree = "<group>"; };
 		6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigatioView.swift; sourceTree = "<group>"; };
+		626E3DF02CF84B4E004860A0 /* ExposicionesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposicionesRepository.swift; sourceTree = "<group>"; };
+		626E3DF72CF8CED0004860A0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		62ABA8952D091521002545D2 /* museo.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = museo.der; sourceTree = "<group>"; };
+		62ABA8992D0916BE002545D2 /* ColorHexExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHexExtension.swift; sourceTree = "<group>"; };
+		62ABA89B2D091785002545D2 /* ExpositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpositionView.swift; sourceTree = "<group>"; };
 		62DFD0E72CDAF7AF00C074DD /* QrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrView.swift; sourceTree = "<group>"; };
 		62DFD0E92CDAFE7800C074DD /* QRView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView2.swift; sourceTree = "<group>"; };
 		62DFD0EB2CDB01D000C074DD /* QRView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView3.swift; sourceTree = "<group>"; };
@@ -41,7 +50,6 @@
 		62FD79352CC84376003F95A5 /* Exposicion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exposicion.swift; sourceTree = "<group>"; };
 		62FD79392CC84F55003F95A5 /* ExposicionesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposicionesView.swift; sourceTree = "<group>"; };
 		62FD793B2CC85CFE003F95A5 /* EsposicionesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EsposicionesViewModel.swift; sourceTree = "<group>"; };
-		62FD79BD2CD1C25B003F95A5 /* museo.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = museo.der; path = ../../../../Downloads/museo.der; sourceTree = "<group>"; };
 		62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = pinnedCertificate.cer; sourceTree = "<group>"; };
 		8CFBBFC32CAF2E84002E9817 /* MuseoVirtualDANP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuseoVirtualDANP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseoVirtualDANPApp.swift; sourceTree = "<group>"; };
@@ -62,59 +70,101 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		620B49D72CB0FDD200627F64 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-				62FD79342CC84344003F95A5 /* Pagination */,
-				6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */,
-				8C89A5662CB6CAB700592CFD /* Authentication */,
-				620B49D82CB1009700627F64 /* MuseumMap */,
-			);
-			path = Scenes;
-			sourceTree = "<group>";
-		};
 		620B49D82CB1009700627F64 /* MuseumMap */ = {
 			isa = PBXGroup;
 			children = (
 				620B49DA2CB100D600627F64 /* MuseumMapView.swift */,
+				62ABA89B2D091785002545D2 /* ExpositionView.swift */,
 			);
 			path = MuseumMap;
 			sourceTree = "<group>";
 		};
-		62FD79312CB70567003F95A5 /* Models */ = {
+		626E3DF22CF8CC32004860A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				626E3DF02CF84B4E004860A0 /* ExposicionesRepository.swift */,
+				62FD79352CC84376003F95A5 /* Exposicion.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		626E3DF32CF8CC3D004860A0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */,
+				62ABA8932D091191002545D2 /* QR */,
+				62ABA8922D091174002545D2 /* Authentication */,
+				62ABA8912D091156002545D2 /* DetailView */,
+				620B49D82CB1009700627F64 /* MuseumMap */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		626E3DF42CF8CC4C004860A0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				62FD793B2CC85CFE003F95A5 /* EsposicionesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		626E3DF62CF8CEB9004860A0 /* NetworkConfig */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Models;
+			path = NetworkConfig;
 			sourceTree = "<group>";
 		};
-		62FD79342CC84344003F95A5 /* Pagination */ = {
+		62ABA8912D091156002545D2 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
-				62FD79352CC84376003F95A5 /* Exposicion.swift */,
 				62FD79392CC84F55003F95A5 /* ExposicionesView.swift */,
-				62FD793B2CC85CFE003F95A5 /* EsposicionesViewModel.swift */,
 				62DFD0ED2CE4208600C074DD /* ExposicionDetalleView.swift */,
 			);
-			path = Pagination;
+			path = DetailView;
 			sourceTree = "<group>";
 		};
-		8C89A5662CB6CAB700592CFD /* Authentication */ = {
+		62ABA8922D091174002545D2 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */,
 				620B49E12CB1D1AD00627F64 /* HomeView.swift */,
 				620B49DF2CB1CF2D00627F64 /* LoginView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		62ABA8932D091191002545D2 /* QR */ = {
+			isa = PBXGroup;
+			children = (
 				62DFD0E72CDAF7AF00C074DD /* QrView.swift */,
 				62DFD0E92CDAFE7800C074DD /* QRView2.swift */,
 				62DFD0EB2CDB01D000C074DD /* QRView3.swift */,
 			);
-			path = Authentication;
+			path = QR;
+			sourceTree = "<group>";
+		};
+		62ABA8972D09158B002545D2 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				626E3DF72CF8CED0004860A0 /* NetworkManager.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		62ABA8982D0915E1002545D2 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				62ABA8992D0916BE002545D2 /* ColorHexExtension.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		8CFBBFBA2CAF2E84002E9817 = {
 			isa = PBXGroup;
 			children = (
+				62ABA8952D091521002545D2 /* museo.der */,
+				626E3DF62CF8CEB9004860A0 /* NetworkConfig */,
 				8CFBBFC52CAF2E84002E9817 /* MuseoVirtualDANP */,
 				8CFBBFC42CAF2E84002E9817 /* Products */,
 			);
@@ -131,10 +181,12 @@
 		8CFBBFC52CAF2E84002E9817 /* MuseoVirtualDANP */ = {
 			isa = PBXGroup;
 			children = (
+				62ABA8982D0915E1002545D2 /* utils */,
 				62FD79C12CD1C82B003F95A5 /* pinnedCertificate.cer */,
-				62FD79BD2CD1C25B003F95A5 /* museo.der */,
-				62FD79312CB70567003F95A5 /* Models */,
-				620B49D72CB0FDD200627F64 /* Scenes */,
+				626E3DF42CF8CC4C004860A0 /* ViewModel */,
+				626E3DF32CF8CC3D004860A0 /* View */,
+				626E3DF22CF8CC32004860A0 /* Model */,
+				62ABA8972D09158B002545D2 /* Repository */,
 				8CFBBFC62CAF2E84002E9817 /* MuseoVirtualDANPApp.swift */,
 				8CFBBFCA2CAF2E87002E9817 /* Assets.xcassets */,
 				8CFBBFCF2CAF2E87002E9817 /* Persistence.swift */,
@@ -213,7 +265,7 @@
 				8CFBBFCE2CAF2E87002E9817 /* Preview Assets.xcassets in Resources */,
 				8CFBBFCB2CAF2E87002E9817 /* Assets.xcassets in Resources */,
 				62FD79C22CD1C82B003F95A5 /* pinnedCertificate.cer in Resources */,
-				62FD79BE2CD1C25B003F95A5 /* museo.der in Resources */,
+				62ABA8962D091522002545D2 /* museo.der in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				626E3DF12CF84B4E004860A0 /* ExposicionesRepository.swift in Sources */,
 				62FD79362CC84376003F95A5 /* Exposicion.swift in Sources */,
 				62DFD0EC2CDB01D000C074DD /* QRView3.swift in Sources */,
 				620B49E42CB1D1EB00627F64 /* CreatedAccountView.swift in Sources */,
@@ -234,11 +287,14 @@
 				62DFD0E82CDAF7AF00C074DD /* QrView.swift in Sources */,
 				8CFBBFD02CAF2E87002E9817 /* Persistence.swift in Sources */,
 				620B49DB2CB100D600627F64 /* MuseumMapView.swift in Sources */,
+				626E3DF82CF8CED0004860A0 /* NetworkManager.swift in Sources */,
+				62ABA89C2D091785002545D2 /* ExpositionView.swift in Sources */,
 				620B49E22CB1D1AD00627F64 /* HomeView.swift in Sources */,
 				8CFBBFC72CAF2E84002E9817 /* MuseoVirtualDANPApp.swift in Sources */,
 				6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */,
 				62FD793A2CC84F55003F95A5 /* ExposicionesView.swift in Sources */,
 				62DFD0EE2CE4208600C074DD /* ExposicionDetalleView.swift in Sources */,
+				62ABA89A2D0916BE002545D2 /* ColorHexExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
