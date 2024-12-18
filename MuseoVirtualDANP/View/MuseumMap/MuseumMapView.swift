@@ -118,7 +118,7 @@ struct MuseumMapView: View {
     @State private var selectedRoom: UUID? = nil      // State to track which room is selected
     
     @State private var isLinkActive = false
-    @State private var selectedExposition:Exposicion = Exposicion(id: 0, titulo: "", tecnica: "", categoria: "", descripcion: "", ano: 0, imagen: "", posX: 0, posY: 0, width: 0, height: 0, bg_color: "", border_color: "", border: false)
+    @State private var selectedExposition:Exposicion = Exposicion(id: 0, titulo: "", tecnica: "", categoria: "", descripcion: "", ano: 0, imagen: "", audio: "", posX: 0, posY: 0, width: 0, height: 0, bg_color: "", border_color: "", border: false)
     
     var body: some View {
         let originalSize = CGSize(width: 11, height: 23) // Original map size for scaling reference
@@ -169,9 +169,9 @@ struct MuseumMapView: View {
         .frame(width: targetSize.width, height: targetSize.height) // Set the frame size of the map
         .onAppear {
             fetchMuseumData()                      // Fetch the initial museum data when the view appears
-        }
+        } 
         .background(
-            NavigationLink(destination: ExposicionDetalleView(exposicion: self.selectedExposition), isActive: $isLinkActive) {
+            NavigationLink(destination: ExposicionDetalleView(exposicionId: self.selectedExposition.id), isActive: $isLinkActive) {
                 EmptyView()
             }
             .hidden()
@@ -203,6 +203,7 @@ func mapRoomEntityToModel(_ room: MuseumRoomEntity, expositions: [ExpositionEnti
                     descripcion: $0.descripcion ?? "", // Fill with actual data if available
                     ano: Int($0.ano), // Fill with actual data if available
                     imagen: $0.imagen,
+                    audio: $0.audio,
                     posX: $0.posX,
                     posY: $0.posY,
                     width: $0.width,
@@ -229,13 +230,16 @@ func fetchMuseumData() {
         }
         
         guard let data = data else { return }
+        print(data)
         
         let decoder = JSONDecoder()
         do {
+            print("start decode")
             let roomsData = try decoder.decode([MuseumRoomData].self, from: data)
+            print("end decode")
             saveRoomsToCoreData(roomsData)
         } catch {
-            print("Error decoding data: \(error.localizedDescription)")
+            print("Error ????? decoding data: \(error.localizedDescription)")
         }
     }.resume()
 }
@@ -287,6 +291,7 @@ func fetchOrCreateExpositionEntity(expositionData: ExpositionData, in context: N
     let fetchRequest: NSFetchRequest<ExpositionEntity> = ExpositionEntity.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "integer_id == %d", expositionData.id!)
 
+    print("start create exp")
     do {
         let fetchedExpositions = try context.fetch(fetchRequest)
         let expositionEntity = fetchedExpositions.first ?? ExpositionEntity(context: context)
@@ -308,6 +313,9 @@ func fetchOrCreateExpositionEntity(expositionData: ExpositionData, in context: N
         expositionEntity.border = expositionData.border
         expositionEntity.absolute_position = expositionData.absolute_position
         expositionEntity.autor = expositionData.autor
+        expositionEntity.audio = expositionData.audio
+        
+        print("creating")
 
         if !parentRoom.expositions!.contains(expositionEntity) {
             parentRoom.addToExpositions(expositionEntity)
@@ -352,6 +360,7 @@ struct ExpositionData: Codable {
     let border: Bool
     let absolute_position: Bool
     let autor: String
+    let audio: String?
 }
 
 

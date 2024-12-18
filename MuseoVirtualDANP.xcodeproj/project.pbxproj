@@ -11,6 +11,7 @@
 		620B49E02CB1CF2D00627F64 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49DF2CB1CF2D00627F64 /* LoginView.swift */; };
 		620B49E22CB1D1AD00627F64 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49E12CB1D1AD00627F64 /* HomeView.swift */; };
 		620B49E42CB1D1EB00627F64 /* CreatedAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */; };
+		624F40192D1379BA006C8F89 /* ExposicionDetalleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624F40182D1379BA006C8F89 /* ExposicionDetalleViewModel.swift */; };
 		6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */; };
 		626E3DF12CF84B4E004860A0 /* ExposicionesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626E3DF02CF84B4E004860A0 /* ExposicionesRepository.swift */; };
 		626E3DF82CF8CED0004860A0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626E3DF72CF8CED0004860A0 /* NetworkManager.swift */; };
@@ -37,6 +38,7 @@
 		620B49DF2CB1CF2D00627F64 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		620B49E12CB1D1AD00627F64 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		620B49E32CB1D1EB00627F64 /* CreatedAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedAccountView.swift; sourceTree = "<group>"; };
+		624F40182D1379BA006C8F89 /* ExposicionDetalleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposicionDetalleViewModel.swift; sourceTree = "<group>"; };
 		6262CAEB2CB202E000D9DCDF /* TabNavigatioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigatioView.swift; sourceTree = "<group>"; };
 		626E3DF02CF84B4E004860A0 /* ExposicionesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposicionesRepository.swift; sourceTree = "<group>"; };
 		626E3DF72CF8CED0004860A0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				62FD793B2CC85CFE003F95A5 /* EsposicionesViewModel.swift */,
+				624F40182D1379BA006C8F89 /* ExposicionDetalleViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				6262CAEC2CB202E000D9DCDF /* TabNavigatioView.swift in Sources */,
 				62FD793A2CC84F55003F95A5 /* ExposicionesView.swift in Sources */,
 				62DFD0EE2CE4208600C074DD /* ExposicionDetalleView.swift in Sources */,
+				624F40192D1379BA006C8F89 /* ExposicionDetalleViewModel.swift in Sources */,
 				62ABA89A2D0916BE002545D2 /* ColorHexExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +433,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MuseoVirtualDANP/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = J7Q3324664;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Esta aplicacion requiere de la camara para escanear codigos QR";

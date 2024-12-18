@@ -9,7 +9,7 @@ struct ExposicionesView: View {
             ScrollView {
                 LazyVStack(spacing: 16) { // Espaciado uniforme entre elementos
                     ForEach(viewModel.exposiciones) { exposicion in
-                        NavigationLink(destination: ExposicionDetalleView(exposicion: exposicion)) {
+                        NavigationLink(destination: ExposicionDetalleView(exposicionId: exposicion.id)) {
                             ExposicionRow(exposicion: exposicion)
                                 .onAppear {
                                     if exposicion.id == viewModel.exposiciones.last?.id {

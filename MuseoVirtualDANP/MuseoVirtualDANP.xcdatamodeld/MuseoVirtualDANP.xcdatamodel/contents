@@ -4,6 +4,7 @@
         <attribute name="absolute_position" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="absolutePosition" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="ano" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="audio" optional="YES" attributeType="String"/>
         <attribute name="autor" optional="YES" attributeType="String"/>
         <attribute name="bg_color" optional="YES" attributeType="String"/>
         <attribute name="border" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

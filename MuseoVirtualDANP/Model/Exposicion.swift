@@ -8,6 +8,7 @@ struct Exposicion: Identifiable, Codable {
     let descripcion: String
     let ano: Int
     let imagen: String?
+    let audio: String?
     let posX: Double
     let posY: Double
     let width: Double

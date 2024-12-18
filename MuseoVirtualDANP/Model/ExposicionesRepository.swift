@@ -21,6 +21,26 @@ class ExposicionesRepository {
         return session.dataTaskPublisher(for: url)
             .map { $0.data }
             .decode(type: APIResponse.self, decoder: JSONDecoder())
+            .catch { error -> AnyPublisher<APIResponse, Error> in
+                print("Decoding error: \(error)")
+                return Fail(error: error).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchExposicion(by id: Int) -> AnyPublisher<Exposicion, Error> {
+        guard let url = URL(string: "\(baseURL)\(id)/") else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .decode(type: Exposicion.self, decoder: JSONDecoder())
+            .catch { error -> AnyPublisher<Exposicion, Error> in
+                print("Decoding error: \(error)")
+                return Fail(error: error).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }
+	

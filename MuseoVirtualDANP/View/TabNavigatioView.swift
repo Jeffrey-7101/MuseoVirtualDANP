@@ -14,9 +14,9 @@ struct TabNavigatioView: View {
                 
                 // Segunda pestaña - QR
                 
-//                QrView()
-//                QRView2()
-                QRScannerView()
+                QrView()
+                //QRView2()
+//                QRScannerView()
                     .tabItem {
                          Image(systemName: "qrcode.viewfinder")
                         Text("QR")

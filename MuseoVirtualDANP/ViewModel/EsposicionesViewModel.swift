@@ -10,7 +10,7 @@ class ExposicionesViewModel: ObservableObject {
     
     private let repository: ExposicionesRepository
     
-    init(repository: ExposicionesRepository = ExposicionesRepository()) {
+    init(repository: ExposicionesRepository = ExposicionesRepository(session: URLSession.shared)) {
         self.repository = repository
     }
     
