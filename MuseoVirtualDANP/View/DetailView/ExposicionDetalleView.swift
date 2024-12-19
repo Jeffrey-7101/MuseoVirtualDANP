@@ -1,5 +1,6 @@
 import SwiftUI
 import AVKit
+import AVFoundation
 
 struct ExposicionDetalleView: View {
     let exposicionId: Int?
@@ -128,8 +129,18 @@ class AudioPlayerViewModel: ObservableObject {
     @Published var progress: Double?
     @Published var errorMessage: String?
     
+    func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth])
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("AVAudioSession configurado correctamente.")
+        } catch {
+            print("Error al configurar AVAudioSession: \(error.localizedDescription)")
+        }
+    }
+    
     func setupPlayer(with urlString: String) {
-        print("Configurando reproductor con URL: \(urlString)")
+        setupAudioSession() // Configura la sesión de audio
         
         guard let url = URL(string: urlString) else {
             errorMessage = "URL no válida."
@@ -157,7 +168,10 @@ class AudioPlayerViewModel: ObservableObject {
         )
         
         // Observa el tiempo de reproducción
-        timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main) { [weak self] time in
+        timeObserver = player.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 1, preferredTimescale: 1),
+            queue: .main
+        ) { [weak self] time in
             guard let self = self, let duration = player.currentItem?.duration else { return }
             
             self.currentTimeFormatted = self.formatTime(time)
@@ -222,4 +236,3 @@ class AudioPlayerViewModel: ObservableObject {
         return String(format: "%d:%02d", minutes, seconds)
     }
 }
-

@@ -84,6 +84,8 @@ struct ExposicionRow: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
+            
+            Spacer()
         }
         .padding()
         .background(
