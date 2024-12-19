@@ -7,7 +7,7 @@ struct ExposicionDetalleView: View {
     @StateObject private var audioPlayer = AudioPlayerViewModel()
     
     var body: some View {
-        if let exposicionId = exposicionId{
+        if let exposicionId = exposicionId {
             Group {
                 if let exposicion = viewModel.exposicion {
                     ScrollView {
@@ -118,8 +118,6 @@ struct ExposicionDetalleView: View {
     }
 }
 
-
-
 class AudioPlayerViewModel: ObservableObject {
     private var player: AVPlayer?
     private var timeObserver: Any?
@@ -147,6 +145,17 @@ class AudioPlayerViewModel: ObservableObject {
             return
         }
         
+        // Configurar para que el audio se reproduzca en bucle
+        player.actionAtItemEnd = .none
+        
+        // Escuchar el final del audio
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(restartAudio),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+        
         // Observa el tiempo de reproducción
         timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main) { [weak self] time in
             guard let self = self, let duration = player.currentItem?.duration else { return }
@@ -160,6 +169,13 @@ class AudioPlayerViewModel: ObservableObject {
                 self.progress = currentTimeSeconds / durationSeconds
             }
         }
+    }
+    
+    @objc private func restartAudio() {
+        guard let player = player else { return }
+        player.seek(to: .zero)
+        player.play()
+        print("Reproducción reiniciada automáticamente.")
     }
     
     func togglePlayPause() {
@@ -188,6 +204,8 @@ class AudioPlayerViewModel: ObservableObject {
             player.removeTimeObserver(observer)
         }
         
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        
         self.player = nil
         self.timeObserver = nil
         isPlaying = false
@@ -204,3 +222,4 @@ class AudioPlayerViewModel: ObservableObject {
         return String(format: "%d:%02d", minutes, seconds)
     }
 }
+

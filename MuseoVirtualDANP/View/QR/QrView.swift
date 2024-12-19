@@ -2,7 +2,6 @@ import SwiftUI
 import AVFoundation
 import Vision
 
-// 1. Application main interface
 struct QrView: View {
 
     @State private var scannedString: String = "Scan a QR code or barcode"
